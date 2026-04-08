@@ -3,10 +3,24 @@ import math
 n,m=map(int,input().split())
 Ls = [int(x) for x in input().split()]
 
-for i in range(m):
-    index=Ls.index(max(Ls))
-    half=math.ceil(Ls[index]/2)
-    Ls.append(Ls[index]-half)
-    Ls[index] = half
+def check(x) :
+    if x==0:return False
+    cuts=0
+    for length in Ls:
+        cuts+=math.ceil(length/x)-1
+    return cuts<=m
 
-print(max(Ls))
+#solve:
+left=1
+right=max(Ls)
+ans=right
+while left<=right:
+    mid=(left+right)//2
+    if check(mid):
+        ans=right
+        right=mid-1
+    else:
+        left=mid+1
+
+print(ans)
+
